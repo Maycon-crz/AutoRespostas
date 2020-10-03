@@ -13,8 +13,9 @@
 		<div class='col-12 text-center prontas'>
 			<ul>
 				<li>
-					<input type='text' name='especificapronta' id='especificapronta' placeholder='Procurar por assunto'>
-					<button type='button' id='prontaespecifica' class='btn btn-outline-success'>>></button>								
+					<input type='text' name='especificapronta' id='especificapronta' placeholder='Procurar por assunto' class='form-control text-center'>
+				</li><li>
+					<button type='button' id='prontaespecifica' class='form-control btn btn-outline-success'>>></button>								
 				</li><li>
 					<div id='linhaprontaEspecifica'>---</div>
 				</li>
