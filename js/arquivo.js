@@ -1,8 +1,12 @@
 $(document).ready(function(){
-	
+	prontas();
 });
 
-
+function prontas(){
+	$(document).on('click', '#vermsgsprontas', function(){
+		$("#linhaProntas").toggle();
+	});
+}
 
 // function chamaAtualizacao(){
 // 	var funcaoTimersts = setInterval(function(){
