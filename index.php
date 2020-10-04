@@ -31,7 +31,7 @@
 			<button type='button' class='form-control mt-2 btn btn-primary' id='btmostracadprontas'>Cadastrar Mensagem Pronta</button>
 		</div>
 	</div>
-	<div class='row'>
+	<div class='row' id='linhaCadastromsgsprontas'>
 		<div class='col-12 text-center'>
 			<form action='confg.php' method='post' id='formsgsprontas'>
 				<ul>
@@ -41,6 +41,10 @@
 						<label for='assuntoMSGpronta' class='form-control mt-2 mb-0'><h5>Assunto:</h5></label>
 					</li><li>
 						<input type='text' name='' id='assuntoMSGpronta' placeholder='Ex: Estismulante...' class='form-control text-center'>
+					</li><li>											
+						<label for='criadaPor' class='form-control mt-2 mb-0'><h5>Criada Por:</h5></label>
+					</li><li>
+						<input type='text' name='' id='criadaPor' placeholder='Seu Nome' class='form-control text-center'>
 					</li><li>
 						<textarea cols='35' rows='5' placeholder='Mensagem...' name='' id='mensagemParaCadastro' class='form-control mt-2'></textarea>
 					</li><li>

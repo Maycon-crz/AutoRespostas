@@ -8,24 +8,59 @@ function mensagensProntas(){
 		$("#linhaProntas").toggle();
 	});
 }
-function duplicateCount(string) {
-  const charMap = {};
-
-  for (const char of string.toLowerCase()) {
-/*5*/   charMap[char] = (charMap[char] || 0) + 1;
-  }
-
-  return Object.values(charMap).filter((count) => count > 1).length;
+function enviaCadastroMSGSprontasDB(mensagemParaCadastro, assuntoMSGpronta, criadaPor, inputItensDinamicos1, inputItensDinamicos2, inputItensDinamicos3, inputItensDinamicos4, inputItensDinamicos5){
+	$.ajax({
+		url: 'confg.php',
+		type: 'POST',
+		data: {
+			"mensagemParaCadastro": mensagemParaCadastro,
+			"assuntoMSGpronta": assuntoMSGpronta,
+			"criadaPor": criadaPor,
+			"inputItensDinamicos1": inputItensDinamicos1,
+			"inputItensDinamicos2": inputItensDinamicos2,
+			"inputItensDinamicos3": inputItensDinamicos3,
+			"inputItensDinamicos4": inputItensDinamicos4,
+			"inputItensDinamicos5": inputItensDinamicos5
+		},
+		dataType: "json",
+		success: function(retornado){
+			alert(retornado);
+		}
+	});
 }
-
 function cadastroMSGSprontas(){
-	$(document).on('click', '#btVerMSGpronta', function(){
+	$(document).on('click', '#btCadastrarMSGpronta', function(){		
 		var mensagemParaCadastro = $("#mensagemParaCadastro").val();
 		var assuntoMSGpronta = $("#assuntoMSGpronta").val();
-		var inputItensDinamicos1 = ""; var inputItensDinamicos2 = "";
-		var inputItensDinamicos3 = ""; var inputItensDinamicos4 = "";
+		var criadaPor = $("#criadaPor").val();
+		var inputItensDinamicos1 = "";var inputItensDinamicos2 = "";
+		var inputItensDinamicos3 = "";var inputItensDinamicos4 = "";
 		var inputItensDinamicos5 = "";
-
+		if($("#inputItensDinamicos1").val()){
+			var inputItensDinamicos1 = $("#inputItensDinamicos1").val();		
+			if($("#inputItensDinamicos2").val()){
+				var inputItensDinamicos2 = $("#inputItensDinamicos2").val();				
+				if($("#inputItensDinamicos3").val()){
+					var inputItensDinamicos3 = $("#inputItensDinamicos3").val();					
+					if($("#inputItensDinamicos4").val()){
+						var inputItensDinamicos4 = $("#inputItensDinamicos4").val();						
+						if($("#inputItensDinamicos5").val()){
+							var inputItensDinamicos5 = $("#inputItensDinamicos5").val();							
+						}
+					}
+				}
+			}
+		}
+		enviaCadastroMSGSprontasDB(mensagemParaCadastro, assuntoMSGpronta, criadaPor, inputItensDinamicos1, inputItensDinamicos2, inputItensDinamicos3, inputItensDinamicos4, inputItensDinamicos5);
+	});	
+	$(document).on('click', '#btmostracadprontas', function(){
+		$("#linhaCadastromsgsprontas").toggle();
+	});
+	$(document).on('click', '#btVerMSGpronta', function(){
+		var mensagemParaCadastro = $("#mensagemParaCadastro").val();
+		var assuntoMSGpronta = $("#assuntoMSGpronta").val();		
+		var criadaPor = $("#criadaPor").val();
+		var mensagemParaVisualizar = mensagemParaCadastro;
 		if($("#inputItensDinamicos1").val()){
 			var inputItensDinamicos1 = $("#inputItensDinamicos1").val();
 			mensagemParaVisualizar = mensagemParaCadastro.replace("#1", "{"+inputItensDinamicos1+"}");
@@ -45,16 +80,17 @@ function cadastroMSGSprontas(){
 						}
 					}
 				}
-			}									
-			$("#visualizandoMSGS").html(
-				"<div class='border border-success m-3'>"+
-					"<p>Assunto: "+assuntoMSGpronta+"</p>"+
-					"<p>"+mensagemParaVisualizar+"</p>"+
-				"</div>"
-				);
+			}												
 		}else{
 			alert("Deseja cadastrar sem Dinâmicos?");
 		}
+		$("#visualizandoMSGS").html(
+			"<div class='border border-success m-3'>"+					
+				"<p>Assunto: "+assuntoMSGpronta+"</p>"+
+				"<p>"+mensagemParaVisualizar+"</p>"+
+				"<p>Criada por: "+criadaPor+"</p>"+
+			"</div>"
+		);
 	});
 	$(document).on('click', '.btsFechaDinamicos', function(){
 		var valorItemDinamico = $(this).val();
@@ -63,17 +99,13 @@ function cadastroMSGSprontas(){
 		switch(contaDinamicos){
 			case 1:
 				$("#fechaDinamico1").css("display", "block");
-			break;
-			case 2:
+			break;case 2:
 				$("#fechaDinamico2").css("display", "block");
-			break;
-			case 3:
+			break;case 3:
 				$("#fechaDinamico3").css("display", "block");				
-			break;
-			case 4:
+			break;case 4:
 				$("#fechaDinamico4").css("display", "block");
-			break;
-			case 5:
+			break;case 5:
 				$("#fechaDinamico5").css("display", "block");				
 			break;
 		}			
@@ -83,24 +115,21 @@ function cadastroMSGSprontas(){
 			contaDinamicos++;
 			$("#itensDinamicos").prepend(
 				"<li class='border border-success mt-2' id='linha"+contaDinamicos+"itensDinamicos'>"+
-					"<input type='text' name='' placeholder='"+contaDinamicos+"' class='form-control' id='inputItensDinamicos"+contaDinamicos+"'/>"+
+					"<input type='text' name='' placeholder='Para Usar No Texto Digite: #"+contaDinamicos+"' class='form-control' id='inputItensDinamicos"+contaDinamicos+"'/>"+
 					"<button type='button' id='fechaDinamico"+contaDinamicos+"' value='"+contaDinamicos+"' class='form-control btn btn-danger btsFechaDinamicos'>"+contaDinamicos+" ( X )</button>"+
 				"</li>"
 			);	
 			switch(contaDinamicos){				
 				case 2:
 					$("#fechaDinamico1").css("display", "none");
-				break;
-				case 3:
+				break;case 3:
 					$("#fechaDinamico1").css("display", "none");
 					$("#fechaDinamico2").css("display", "none");
-				break;
-				case 4:
+				break;case 4:
 					$("#fechaDinamico1").css("display", "none");
 					$("#fechaDinamico2").css("display", "none");
 					$("#fechaDinamico3").css("display", "none");
-				break;
-				case 5:
+				break;case 5:
 					$("#fechaDinamico1").css("display", "none");
 					$("#fechaDinamico2").css("display", "none");
 					$("#fechaDinamico3").css("display", "none");
