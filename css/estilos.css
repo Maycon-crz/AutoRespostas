@@ -16,6 +16,10 @@ body{
     padding:0 auto;    
 }
 
+#linhaProntas{
+	display: none;
+}
+
 @media only screen and (max-device-width: 600px) { 
 	
 }

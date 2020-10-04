@@ -1,4 +1,4 @@
-		<footer class="bg-success">
+		<footer class="">
 			
 		</footer>
 	</body>
