@@ -62,47 +62,5 @@
 			</form>
 		</div>
 	</div>
-
-
-									
-		<!-- <table class='linha_cadastro_msg_pronta'>
-		<tr>
-			<td>
-				<hr>				
-					<table>						
-							<td>
-								
-							</td>																										
-						</tr>
-						<tr>
-							<td>
-								<h6>Itens para mensagem</h6>
-							</td>																										
-						</tr>
-						<tr>
-							<td>		
-								<div id='linhaItens'></div>
-							</td>													
-						</tr>
-						<tr>
-							<td>
-								<button type='button' id='mais_itens' class='m-1 btn btn-primary'>Adicionar itens</button>												
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<textarea cols='35' rows='5' placeholder='Segundo paragrafo(opicional)' name='segparagrafo'></textarea>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								
-							</td>
-						</tr>										
-					</table>
-				</form>
-			</td>
-		</tr>
-	</table>						 -->
 	
 <?php  require_once("include/rodape.php");?>
