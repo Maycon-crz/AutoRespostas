@@ -6,6 +6,16 @@ var contaDinamicos=0;
 function mensagensProntas(){
 	$(document).on('click', '#vermsgsprontas', function(){
 		$("#linhaProntas").toggle();
+		var valueBtMaisMSGSprontas = $("#btMaisMSGSprontas").val();
+		$.ajax({
+			url: 'confg.php',
+			type: 'POST',
+			data: {'vermsgsprontas': valueBtMaisMSGSprontas},
+			dataType: 'json',
+			success: function(retornado){
+				$("#linhaTodasProntas").html(retornado);
+			}
+		});
 	});
 }
 function enviaCadastroMSGSprontasDB(mensagemParaCadastro, assuntoMSGpronta, criadaPor, inputItensDinamicos1, inputItensDinamicos2, inputItensDinamicos3, inputItensDinamicos4, inputItensDinamicos5){

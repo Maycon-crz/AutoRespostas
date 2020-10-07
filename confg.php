@@ -2,6 +2,27 @@
 <?php
 
 	class msgsProntas{
+		function listandoMSGSprontas($con, $ferramentas, $vermsgsprontas){
+			// echo json_encode("Bora laa funcao chamada ".$vermsgsprontas);
+			$vermsgsprontas = $ferramentas->filtrando($vermsgsprontas);
+			$sqlSelectMSGSprontas = "SELECT * FROM mensagensprontas WHERE 1=1 LIMIT $vermsgsprontas";
+			$selectMSGSprontas = $con->prepare($sqlSelectMSGSprontas);
+			if($selectMSGSprontas->execute()){
+				$corpoMSGSprontas = $selectMSGSprontas->fetchAll(PDO::FETCH_ASSOC);
+				$MSGSprontasCorpo = "";
+				foreach($corpoMSGSprontas as $corpoMSGS){
+					$MSGSprontasCorpo .= "<ul class='border border-success'>";
+					$MSGSprontasCorpo .= "<li>Assunto:</li>";
+					$MSGSprontasCorpo .= "<li><input type='text' id='' value='".$corpoMSGS['assuntomsgpronta']."'></li>";
+					$MSGSprontasCorpo .= "<li>Menssagem: </li>";
+					$MSGSprontasCorpo .= "<li><textarea>".$corpoMSGS['mensagemparacadastro']."</textarea></li>";
+					$MSGSprontasCorpo .= "</ul>";
+				}
+				echo json_encode($MSGSprontasCorpo);
+			}else{
+				echo json_encode("Erro ao listar");
+			}
+		}
 		function cadastrandoMSGSprontas($con, $ferramentas, $mensagemParaCadastro, $assuntoMSGpronta, $criadaPor, $inputItensDinamicos1, 
 		$inputItensDinamicos2, $inputItensDinamicos3, $inputItensDinamicos4, $inputItensDinamicos5){
 			$mensagemParaCadastro = $ferramentas->filtrando($mensagemParaCadastro);
@@ -52,6 +73,9 @@
 			$ferramentas = new ferramentas;			
 			$msgsProntas = new msgsProntas;			
 	
+			if(isset($_POST['vermsgsprontas'])){				
+				$msgsProntas->listandoMSGSprontas($con, $ferramentas, $_POST['vermsgsprontas']);
+			}
 			if( isset($_POST['mensagemParaCadastro']) || isset($_POST['assuntoMSGpronta']) || isset($_POST['criadaPor']) || 
 				isset($_POST['inputItensDinamicos1']) || isset($_POST['inputItensDinamicos2']) || isset($_POST['inputItensDinamicos3']) || 
 				isset($_POST['inputItensDinamicos4']) || isset($_POST['inputItensDinamicos5']) ){				
