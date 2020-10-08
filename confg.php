@@ -12,10 +12,65 @@
 				$MSGSprontasCorpo = "";
 				foreach($corpoMSGSprontas as $corpoMSGS){
 					$MSGSprontasCorpo .= "<ul class='border border-success'>";
-					$MSGSprontasCorpo .= "<li>Assunto:</li>";
-					$MSGSprontasCorpo .= "<li><input type='text' id='' value='".$corpoMSGS['assuntomsgpronta']."'></li>";
-					$MSGSprontasCorpo .= "<li>Menssagem: </li>";
-					$MSGSprontasCorpo .= "<li><textarea>".$corpoMSGS['mensagemparacadastro']."</textarea></li>";
+					$MSGSprontasCorpo .= "<li><h3 class='mt-4'>Assunto:</h3></li>";
+					$MSGSprontasCorpo .= "<li><input type='text' id='' value='".$corpoMSGS['assuntomsgpronta']."' class='form-control text-center border border-primary'></li>";
+					$MSGSprontasCorpo .= "<li><h3 class='mt-2'>Menssagem: </h4></li>";
+					$MSGSprontasCorpo .= "<li><textarea class='form-control border border-warning'>".$corpoMSGS['mensagemparacadastro']."</textarea></li>";
+					
+					//Criar funcao separada para inputs dinamicos
+					if($corpoMSGS['inputitensdinamicos1']){
+						$MSGSprontasCorpo .= "<li><h3>Dinamicos: </h4></li>";
+						$MSGSprontasCorpo .= "<li>
+							<h5>
+								<input type='text' value='#1' size='2' class='text-center' disabled /> => ".$corpoMSGS['inputitensdinamicos1']."
+								<input type='hidden' value='".$corpoMSGS['inputitensdinamicos1']."'/>: 
+								<input type='text' id='' placeholder='Digite ".$corpoMSGS['inputitensdinamicos1']."' />						
+							</h5>
+						</li>";
+						if($corpoMSGS['inputitensdinamicos2'] != ""){
+							$MSGSprontasCorpo .= "<li>
+								<h5>
+									<input type='text' value='#2' size='2' class='text-center' disabled /> => ".$corpoMSGS['inputitensdinamicos2']."
+									<input type='hidden' value='".$corpoMSGS['inputitensdinamicos2']."'/>: 
+									<input type='text' id='' placeholder='Digite ".$corpoMSGS['inputitensdinamicos2']."' />							
+								</h5>
+							</li>";
+							if($corpoMSGS['inputitensdinamicos3'] != ""){
+								$MSGSprontasCorpo .= "<li>
+									<h5>
+										<input type='text' value='#3' size='2' class='text-center' disabled /> => ".$corpoMSGS['inputitensdinamicos3']."
+										<input type='hidden' value='".$corpoMSGS['inputitensdinamicos3']."'/>: 
+										<input type='text' id='' placeholder='Digite ".$corpoMSGS['inputitensdinamicos3']."' />								
+									</h5>
+								</li>";
+								if($corpoMSGS['inputitensdinamicos4'] != ""){
+									$MSGSprontasCorpo .= "<li>
+										<h5>
+											<input type='text' value='#4' size='2' class='text-center' disabled /> => ".$corpoMSGS['inputitensdinamicos4']."
+											<input type='hidden' value='".$corpoMSGS['inputitensdinamicos4']."'/>: 
+											<input type='text' id='' placeholder='Digite ".$corpoMSGS['inputitensdinamicos4']."' />									
+										</h5>
+									</li>";
+									if($corpoMSGS['inputitensdinamicos5'] != ""){
+										$MSGSprontasCorpo .= "<li>
+											<h5>
+												<input type='text' value='#5' size='2' class='text-center' disabled /> => ".$corpoMSGS['inputitensdinamicos5']."
+												<input type='hidden' value='".$corpoMSGS['inputitensdinamicos5']."'/>: 
+												<input type='text' id='' placeholder='Digite ".$corpoMSGS['inputitensdinamicos5']."' />										
+											</h5>
+										</li>";
+									}
+								}
+							}
+						}
+					}
+
+					$MSGSprontasCorpo .= "<li>
+						<button type='button' class='btn btn-success mr-3'>Visualizar</button>
+						<button type='button' class='btn btn-warning mr-3'>Gravar Edição</button>
+						<button type='button' class='btn btn-danger'>Excluir</button>
+					</li>";
+					$MSGSprontasCorpo .= "<li><hr class='bg-dark'/></li>";									
 					$MSGSprontasCorpo .= "</ul>";
 				}
 				echo json_encode($MSGSprontasCorpo);
