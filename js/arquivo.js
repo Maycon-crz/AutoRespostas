@@ -1,9 +1,9 @@
 $(document).ready(function(){
-	mensagensProntas();
+	listarMensagensProntas();
 	cadastroMSGSprontas();
 });
 var contaDinamicos=0;
-function mensagensProntas(){
+function listarMensagensProntas(){
 	$(document).on('click', '#vermsgsprontas', function(){
 		$("#linhaProntas").toggle();
 		var valueBtMaisMSGSprontas = $("#btMaisMSGSprontas").val();
@@ -16,6 +16,51 @@ function mensagensProntas(){
 				$("#linhaTodasProntas").html(retornado);
 			}
 		});
+	});
+	$(document).on('click', '.btVisualizarMSGSprontaDoDB', function(){
+		var idbtVisualizarMSGSprontaDoDB 	= $(this).attr('id');
+		var inputCriadaporMSGSdinamicasDB 	= $("#inputCriadaporMSGSdinamicasDB"+idbtVisualizarMSGSprontaDoDB).val();
+		var inputAssuntoMSGSdinamicasDB 	= $("#inputAssuntoMSGSdinamicasDB"+idbtVisualizarMSGSprontaDoDB).val();
+		var textareaMSGSdinamicasDB 		= $("#textareaMSGSdinamicasDB"+idbtVisualizarMSGSprontaDoDB).val();
+		// var valor1ParametroMSGSdinamicas 	= $("#valor1ParametroMSGSdinamicas"+idbtVisualizarMSGSprontaDoDB).val();
+		// var valor2ParametroMSGSdinamicas 	= $("#valor2ParametroMSGSdinamicas"+idbtVisualizarMSGSprontaDoDB).val();
+		// var valor3ParametroMSGSdinamicas		= $("#valor3ParametroMSGSdinamicas"+idbtVisualizarMSGSprontaDoDB).val();
+		// var valor4ParametroMSGSdinamicas 	= $("#valor4ParametroMSGSdinamicas"+idbtVisualizarMSGSprontaDoDB).val();
+		// var valor5ParametroMSGSdinamicas 	= $("#valor5ParametroMSGSdinamicas"+idbtVisualizarMSGSprontaDoDB).val();
+		// alert(inputCriadaporMSGSdinamicasDB+" - "+inputAssuntoMSGSdinamicasDB+" - "+textareaMSGSdinamicasDB+" - "+valor1ParametroMSGSdinamicas+" - "+valor2ParametroMSGSdinamicas+" - "+valor3ParametroMSGSdinamicas+" - "+valor4ParametroMSGSdinamicas+" - "+valor5ParametroMSGSdinamicas);
+
+		if($("#valor1ParametroMSGSdinamicas"+idbtVisualizarMSGSprontaDoDB).val()){
+			var valor1ParametroMSGSdinamicas = $("#valor1ParametroMSGSdinamicas"+idbtVisualizarMSGSprontaDoDB).val();			
+			textareaMSGSdinamicasDB = textareaMSGSdinamicasDB.replace("#1", valor1ParametroMSGSdinamicas);
+			for(var conta=0; conta<4;conta++){textareaMSGSdinamicasDB = textareaMSGSdinamicasDB.replace("#1", valor1ParametroMSGSdinamicas);}			
+			if($("#valor2ParametroMSGSdinamicas"+idbtVisualizarMSGSprontaDoDB).val()){
+				var valor2ParametroMSGSdinamicas = $("#valor2ParametroMSGSdinamicas"+idbtVisualizarMSGSprontaDoDB).val();				
+				for(var conta=0; conta<4;conta++){textareaMSGSdinamicasDB = textareaMSGSdinamicasDB.replace("#2", valor2ParametroMSGSdinamicas);}
+				if($("#valor3ParametroMSGSdinamicas"+idbtVisualizarMSGSprontaDoDB).val()){
+					var valor3ParametroMSGSdinamicas = $("#valor3ParametroMSGSdinamicas"+idbtVisualizarMSGSprontaDoDB).val();					
+					for(var conta=0; conta<4;conta++){textareaMSGSdinamicasDB = textareaMSGSdinamicasDB.replace("#3", valor3ParametroMSGSdinamicas);}
+					if($("#valor4ParametroMSGSdinamicas"+idbtVisualizarMSGSprontaDoDB).val()){
+						var valor4ParametroMSGSdinamicas = $("#valor4ParametroMSGSdinamicas"+idbtVisualizarMSGSprontaDoDB).val();						
+						for(var conta=0; conta<4;conta++){textareaMSGSdinamicasDB = textareaMSGSdinamicasDB.replace("#4", valor4ParametroMSGSdinamicas);}
+						if($("#valor5ParametroMSGSdinamicas"+idbtVisualizarMSGSprontaDoDB).val()){
+							var valor5ParametroMSGSdinamicas = $("#valor5ParametroMSGSdinamicas"+idbtVisualizarMSGSprontaDoDB).val();							
+							for(var conta=0; conta<4;conta++){textareaMSGSdinamicasDB = textareaMSGSdinamicasDB.replace("#5", valor5ParametroMSGSdinamicas);}
+						}
+					}
+				}
+			}												
+		}
+		// alert(textareaMSGSdinamicasDB);
+		$("#visualizandoMSGSdb"+idbtVisualizarMSGSprontaDoDB).html(
+			"<div class='border border-success mt-3'>"+					
+				"<p class='m-3'>"+textareaMSGSdinamicasDB+"</p>"+				
+			"</div>"+
+			"<div class='border border-success'>"+
+				"<button type='button' class='form-control btn btn-success' id=''>Copiar</button>"+
+			"</div>"
+		);
+		// "<p>"+mensagemParaVisualizar+"</p>"+
+		// 		"<p>Criada por: "+criadaPor+"</p>"+
 	});
 }
 function enviaCadastroMSGSprontasDB(mensagemParaCadastro, assuntoMSGpronta, criadaPor, inputItensDinamicos1, inputItensDinamicos2, inputItensDinamicos3, inputItensDinamicos4, inputItensDinamicos5){

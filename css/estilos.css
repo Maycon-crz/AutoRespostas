@@ -16,7 +16,7 @@ body{
     padding:0 auto;    
 }
 
-#linhaProntas{
+#linhaProntas, #linhaCadastromsgsprontas{
 	display: none;
 }
 
