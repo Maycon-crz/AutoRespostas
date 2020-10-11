@@ -1,8 +1,22 @@
 $(document).ready(function(){
+	copiarTextoDaMSGSpronta();
 	listarMensagensProntas();
 	cadastroMSGSprontas();
 });
 var contaDinamicos=0;
+function copiarTextoDaMSGSpronta(){
+	$(document).on('click', '.btCopiarTexto', function(){
+		var idBtCopiarTexto = $(this).attr('id');
+		$("#textoMSGprontaAserCopiado"+idBtCopiarTexto).select();
+		try {
+		var successful = document.execCommand('copy');
+		// var msg = successful ? 'foi' : 'não foi';
+		// alert('Texto '+msg+' copiado!');
+		} catch (err) {
+		alert('Opa, Não conseguimos copiar o texto, é possivel que o seu navegador não tenha suporte, tente usar Crtl+C.');
+		}
+	});
+}
 function listarMensagensProntas(){
 	$(document).on('click', '#vermsgsprontas', function(){
 		$("#linhaProntas").toggle();
@@ -50,17 +64,14 @@ function listarMensagensProntas(){
 				}
 			}												
 		}
-		// alert(textareaMSGSdinamicasDB);
 		$("#visualizandoMSGSdb"+idbtVisualizarMSGSprontaDoDB).html(
-			"<div class='border border-success mt-3'>"+					
-				"<p class='m-3'>"+textareaMSGSdinamicasDB+"</p>"+				
+			"<div class='border border-success p-3'>"+
+				"<textarea class='form-control' id='textoMSGprontaAserCopiado"+idbtVisualizarMSGSprontaDoDB+"'>"+textareaMSGSdinamicasDB+"</textarea>"+
 			"</div>"+
 			"<div class='border border-success'>"+
-				"<button type='button' class='form-control btn btn-success' id=''>Copiar</button>"+
+				"<button type='button' class='form-control btn btn-success btCopiarTexto' id='"+idbtVisualizarMSGSprontaDoDB+"'>Copiar</button>"+
 			"</div>"
 		);
-		// "<p>"+mensagemParaVisualizar+"</p>"+
-		// 		"<p>Criada por: "+criadaPor+"</p>"+
 	});
 }
 function enviaCadastroMSGSprontasDB(mensagemParaCadastro, assuntoMSGpronta, criadaPor, inputItensDinamicos1, inputItensDinamicos2, inputItensDinamicos3, inputItensDinamicos4, inputItensDinamicos5){
@@ -197,13 +208,6 @@ function cadastroMSGSprontas(){
 		
 	});	
 }
-
-// function chamaAtualizacao(){
-// 	var funcaoTimersts = setInterval(function(){
-// 		atualizatudo();
-// 	}, 1000);		
-// }
-
 function carregar(){	
 	location.reload();
 };
