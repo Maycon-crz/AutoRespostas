@@ -52,7 +52,7 @@
 					if($corpoMSGS['inputitensdinamicos1']){
 						$MSGSprontasCorpo .= "<li><h3>Dinamicos: </h4></li>";
 						$MSGSprontasCorpo .= "<li><div class='row'><div class='col-2'>&nbsp;</div><div class='col-8 text-left bg-success'>";
-							$MSGSprontasCorpo .= "<h5>
+							$MSGSprontasCorpo .= "<h5 class='mt-2'>
 								<input type='text' value='#1' size='2' class='text-center' id='numero1ParametroMSGSdinamicas".$contadorprontas."' disabled /> => 								
 								<input type='text' placeholder='Digite: ".$corpoMSGS['inputitensdinamicos1']."' id='valor1ParametroMSGSdinamicas".$contadorprontas."'/> : ".$corpoMSGS['inputitensdinamicos1']."
 								<input type='hidden' value='".$corpoMSGS['inputitensdinamicos1']."' id='nome1ParametroMSGSdinamicas".$contadorprontas."'/>
