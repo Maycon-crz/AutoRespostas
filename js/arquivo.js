@@ -116,7 +116,7 @@ function listarMensagensProntas(){
 		}
 		$("#visualizandoMSGSdb"+idbtVisualizarMSGSprontaDoDB).html(
 			"<div class='border border-success p-3'>"+
-				"<textarea class='form-control' id='textoMSGprontaAserCopiado"+idbtVisualizarMSGSprontaDoDB+"'>"+textareaMSGSdinamicasDB+"</textarea>"+
+				"<textarea rows='4' class='form-control' id='textoMSGprontaAserCopiado"+idbtVisualizarMSGSprontaDoDB+"'>"+textareaMSGSdinamicasDB+"</textarea>"+
 			"</div>"+
 			"<div class='border border-success'>"+
 				"<button type='button' class='form-control btn btn-success btCopiarTexto' id='"+idbtVisualizarMSGSprontaDoDB+"'>Copiar</button>"+

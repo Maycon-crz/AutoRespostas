@@ -36,7 +36,7 @@
 					</li><li>											
 						<label for='assuntoMSGpronta' class='form-control mt-2 mb-0'><h5>Assunto:</h5></label>
 					</li><li>
-						<input type='text' name='' id='assuntoMSGpronta' placeholder='Ex: Estismulante...' class='form-control text-center'>
+						<input type='text' name='' id='assuntoMSGpronta' placeholder='Ex: Estimulante...' class='form-control text-center'>
 					</li><li>											
 						<label for='criadaPor' class='form-control mt-2 mb-0'><h5>Criada Por:</h5></label>
 					</li><li>
