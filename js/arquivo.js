@@ -56,19 +56,25 @@ function copiarTextoDaMSGSpronta(){
 		}
 	});
 }
-function listarMensagensProntas(){
-	$(document).on('click', '#vermsgsprontas', function(){
-		$("#linhaProntas").toggle();
-		var valueBtMaisMSGSprontas = $("#btMaisMSGSprontas").val();
-		$.ajax({
+function carregaMensagensProntasDoDB(valueBtMaisMSGSprontas){
+	$.ajax({
 			url: 'confg.php',
 			type: 'POST',
 			data: {'vermsgsprontas': valueBtMaisMSGSprontas},
 			dataType: 'json',
 			success: function(retornado){
 				$("#linhaTodasProntas").html(retornado);
+				var tres = 3;
+				valueBtMaisMSGSprontas = parseInt(valueBtMaisMSGSprontas)+parseInt(tres);
+				$("#btMaisMSGSprontas").val(valueBtMaisMSGSprontas);
 			}
 		});
+}
+function listarMensagensProntas(){	
+	$(document).on('click', '#vermsgsprontas', function(){
+		$("#linhaProntas").toggle();
+		var valueBtMaisMSGSprontas = $("#btMaisMSGSprontas").val();
+		carregaMensagensProntasDoDB(valueBtMaisMSGSprontas);
 	});
 	$(document).on('click', '.btVisualizarMSGSprontaDoDB', function(){
 		var idbtVisualizarMSGSprontaDoDB 	= $(this).attr('id');
