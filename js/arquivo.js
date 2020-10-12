@@ -58,22 +58,27 @@ function copiarTextoDaMSGSpronta(){
 }
 function carregaMensagensProntasDoDB(valueBtMaisMSGSprontas){
 	$.ajax({
-			url: 'confg.php',
-			type: 'POST',
-			data: {'vermsgsprontas': valueBtMaisMSGSprontas},
-			dataType: 'json',
-			success: function(retornado){
-				$("#linhaTodasProntas").html(retornado);
-				var tres = 3;
-				valueBtMaisMSGSprontas = parseInt(valueBtMaisMSGSprontas)+parseInt(tres);
-				$("#btMaisMSGSprontas").val(valueBtMaisMSGSprontas);
-			}
-		});
+		url: 'confg.php',
+		type: 'POST',
+		data: {'vermsgsprontas': valueBtMaisMSGSprontas},
+		dataType: 'json',
+		success: function(retornado){
+			$("#linhaTodasProntas").html(retornado);
+			var tres = 3;
+			valueBtMaisMSGSprontas = parseInt(valueBtMaisMSGSprontas)+parseInt(tres);
+			$("#btMaisMSGSprontas").val(valueBtMaisMSGSprontas);
+		}
+	});
 }
-function listarMensagensProntas(){	
+function listarMensagensProntas(){		
+	$(document).on('click', '#btMaisMSGSprontas', function(){
+		var valueBtMaisMSGSprontas = $("#btMaisMSGSprontas").val();
+		carregaMensagensProntasDoDB(valueBtMaisMSGSprontas);
+	});
 	$(document).on('click', '#vermsgsprontas', function(){
 		$("#linhaProntas").toggle();
-		var valueBtMaisMSGSprontas = $("#btMaisMSGSprontas").val();
+		$("#btMaisMSGSprontas").val(3);
+		var valueBtMaisMSGSprontas = 3;	
 		carregaMensagensProntasDoDB(valueBtMaisMSGSprontas);
 	});
 	$(document).on('click', '.btVisualizarMSGSprontaDoDB', function(){

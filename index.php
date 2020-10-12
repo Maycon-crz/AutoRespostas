@@ -21,7 +21,7 @@
 				</li><li>
 					<div id='linhaTodasProntas'>**linhaTodasProntas**</div>					
 				</li><li>
-					<button type='button' value=3 id='btMaisMSGSprontas' class='form-control btn btn-secondary'>Mais (+)</button>
+					<button type='button' value=0 id='btMaisMSGSprontas' class='form-control btn btn-secondary'>Mais (+)</button>
 				</li>
 			</ul>
 		</div>		
