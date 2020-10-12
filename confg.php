@@ -1,11 +1,38 @@
 <?php require_once("include/conn.php");?>
 <?php
 
-	class msgsProntas{
+	class msgsProntas{		
+		function excluindoMSGSprontas($con, $ferramentas, $idbtExluiMSGSprontaDB){
+			$idbtExluiMSGSprontaDB = $ferramentas->filtrando($idbtExluiMSGSprontaDB);
+			$sqlDeleteMSGSprontaDB = "DELETE FROM mensagensprontas WHERE id=:idbtExluiMSGSprontaDB";
+			// echo json_encode("Bora Funcao foi chamada ".$idbtExluiMSGSprontaDB);
+			$deleteMSGSprontaDB = $con->prepare($sqlDeleteMSGSprontaDB);
+			$deleteMSGSprontaDB->bindParam(':idbtExluiMSGSprontaDB', $idbtExluiMSGSprontaDB);
+			if($deleteMSGSprontaDB->execute()){
+				echo json_encode("Excluido com Sucesso!");
+			}else{
+				echo json_encode("Erro ao Excluir a Menssagem!");
+			}
+		}
+		function editandoMSGSprontas($con, $ferramentas, $inputAssuntoMSGSdinamicasDB, $textareaMSGSdinamicasDB, $DBidbtEditaMSGSpronta){			
+			$inputAssuntoMSGSdinamicasDB = $ferramentas->filtrando($inputAssuntoMSGSdinamicasDB);
+			$textareaMSGSdinamicasDB = $ferramentas->filtrando($textareaMSGSdinamicasDB);
+			$DBidbtEditaMSGSpronta = $ferramentas->filtrando($DBidbtEditaMSGSpronta);
+			$sqlUpdateMSGSprontas = "UPDATE mensagensprontas SET mensagemparacadastro=:textareaMSGSdinamicasDB, assuntomsgpronta=:inputAssuntoMSGSdinamicasDB WHERE id=:DBidbtEditaMSGSpronta";
+			$updateMSGSprontas = $con->prepare($sqlUpdateMSGSprontas);
+			$updateMSGSprontas->bindParam(':textareaMSGSdinamicasDB', $textareaMSGSdinamicasDB);
+			$updateMSGSprontas->bindParam(':inputAssuntoMSGSdinamicasDB', $inputAssuntoMSGSdinamicasDB);			
+			$updateMSGSprontas->bindParam(':DBidbtEditaMSGSpronta', $DBidbtEditaMSGSpronta);
+			if($updateMSGSprontas->execute()){
+				echo json_encode("Menssagem Editada com Sucesso!");
+			}else{
+				echo json_encode("Erro ao Editar Mensagem!");
+			}
+		}
 		function listandoMSGSprontas($con, $ferramentas, $vermsgsprontas){
 			// echo json_encode("Bora laa funcao chamada ".$vermsgsprontas);
 			$vermsgsprontas = $ferramentas->filtrando($vermsgsprontas);
-			$sqlSelectMSGSprontas = "SELECT * FROM mensagensprontas WHERE 1=1 LIMIT $vermsgsprontas";
+			$sqlSelectMSGSprontas = "SELECT * FROM mensagensprontas WHERE 1=1 ORDER BY id DESC LIMIT $vermsgsprontas";
 			$selectMSGSprontas = $con->prepare($sqlSelectMSGSprontas);
 			if($selectMSGSprontas->execute()){
 				$corpoMSGSprontas = $selectMSGSprontas->fetchAll(PDO::FETCH_ASSOC);
@@ -14,65 +41,56 @@
 				foreach($corpoMSGSprontas as $corpoMSGS){
 					$contadorprontas++;
 					$MSGSprontasCorpo .= "<ul class='border border-success'>";
-					$MSGSprontasCorpo .= "<li><h3 class='mt-4'>Criada Por: </h3></li>";
+					$MSGSprontasCorpo .= "<li><h3 class='mt-1'>Criada Por: </h3></li>";
 					$MSGSprontasCorpo .= "<li><input type='text' value='".$corpoMSGS['criadapor']."' class='form-control text-center border border-primary' id='inputCriadaporMSGSdinamicasDB".$contadorprontas."' disabled /></li>";
-					$MSGSprontasCorpo .= "<li><h3 class='mt-4'>Assunto:</h3></li>";
+					$MSGSprontasCorpo .= "<li><h3 class='mt-1'>Assunto:</h3></li>";
 					$MSGSprontasCorpo .= "<li><input type='text' value='".$corpoMSGS['assuntomsgpronta']."' class='form-control text-center border border-primary' id='inputAssuntoMSGSdinamicasDB".$contadorprontas."'></li>";
-					$MSGSprontasCorpo .= "<li><h3 class='mt-2'>Menssagem: </h4></li>";
+					$MSGSprontasCorpo .= "<li><h3 class='mt-1'>Menssagem: </h4></li>";
 					$MSGSprontasCorpo .= "<li><textarea class='form-control border border-warning' id='textareaMSGSdinamicasDB".$contadorprontas."'>".$corpoMSGS['mensagemparacadastro']."</textarea></li>";
 					
 					//Criar funcao separada para inputs dinamicos
 					if($corpoMSGS['inputitensdinamicos1']){
 						$MSGSprontasCorpo .= "<li><h3>Dinamicos: </h4></li>";
-						$MSGSprontasCorpo .= "<li>
-							<h5>
-								<input type='text' value='#1' size='2' class='text-center' id='numero1ParametroMSGSdinamicas".$contadorprontas."' disabled /> => ".$corpoMSGS['inputitensdinamicos1']."
-								<input type='hidden' value='".$corpoMSGS['inputitensdinamicos1']."' id='nome1ParametroMSGSdinamicas".$contadorprontas."'/>: 
-								<input type='text' placeholder='Digite ".$corpoMSGS['inputitensdinamicos1']."' id='valor1ParametroMSGSdinamicas".$contadorprontas."'/>						
-							</h5>
-						</li>";
-						if($corpoMSGS['inputitensdinamicos2'] != ""){
-							$MSGSprontasCorpo .= "<li>
-								<h5>
-									<input type='text' value='#2' size='2' class='text-center' id='numero2ParametroMSGSdinamicas".$contadorprontas."' disabled /> => ".$corpoMSGS['inputitensdinamicos2']."
-									<input type='hidden' value='".$corpoMSGS['inputitensdinamicos2']."' id='nome2ParametroMSGSdinamicas".$contadorprontas."'/>: 
-									<input type='text' placeholder='Digite ".$corpoMSGS['inputitensdinamicos2']."' id='valor2ParametroMSGSdinamicas".$contadorprontas."'/>							
-								</h5>
-							</li>";
-							if($corpoMSGS['inputitensdinamicos3'] != ""){
-								$MSGSprontasCorpo .= "<li>
-									<h5>
-										<input type='text' value='#3' size='2' class='text-center' id='numero3ParametroMSGSdinamicas".$contadorprontas."' disabled /> => ".$corpoMSGS['inputitensdinamicos3']."
-										<input type='hidden' value='".$corpoMSGS['inputitensdinamicos3']."' id='nome3ParametroMSGSdinamicas".$contadorprontas."' />: 
-										<input type='text' placeholder='Digite ".$corpoMSGS['inputitensdinamicos3']."' id='valor3ParametroMSGSdinamicas".$contadorprontas."' />								
-									</h5>
-								</li>";
-								if($corpoMSGS['inputitensdinamicos4'] != ""){
-									$MSGSprontasCorpo .= "<li>
-										<h5>
-											<input type='text' value='#4' size='2' class='text-center' id='numero4ParametroMSGSdinamicas".$contadorprontas."' disabled /> => ".$corpoMSGS['inputitensdinamicos4']."
-											<input type='hidden' value='".$corpoMSGS['inputitensdinamicos4']."' id='nome4ParametroMSGSdinamicas".$contadorprontas."' />: 
-											<input type='text' placeholder='Digite ".$corpoMSGS['inputitensdinamicos4']."' id='valor4ParametroMSGSdinamicas".$contadorprontas."' />									
-										</h5>
-									</li>";
-									if($corpoMSGS['inputitensdinamicos5'] != ""){
-										$MSGSprontasCorpo .= "<li>
-											<h5>
-												<input type='text' value='#5' size='2' class='text-center' id='numero5ParametroMSGSdinamicas".$contadorprontas."' disabled /> => ".$corpoMSGS['inputitensdinamicos5']."
-												<input type='hidden' value='".$corpoMSGS['inputitensdinamicos5']."' id='nome5ParametroMSGSdinamicas".$contadorprontas."' />: 
-												<input type='text' placeholder='Digite ".$corpoMSGS['inputitensdinamicos5']."' id='valor5ParametroMSGSdinamicas".$contadorprontas."' />										
-											</h5>
-										</li>";
+						$MSGSprontasCorpo .= "<li><div class='row'><div class='col-2'>&nbsp;</div><div class='col-8 text-left bg-success'>";
+							$MSGSprontasCorpo .= "<h5>
+								<input type='text' value='#1' size='2' class='text-center' id='numero1ParametroMSGSdinamicas".$contadorprontas."' disabled /> => 								
+								<input type='text' placeholder='Digite: ".$corpoMSGS['inputitensdinamicos1']."' id='valor1ParametroMSGSdinamicas".$contadorprontas."'/> : ".$corpoMSGS['inputitensdinamicos1']."
+								<input type='hidden' value='".$corpoMSGS['inputitensdinamicos1']."' id='nome1ParametroMSGSdinamicas".$contadorprontas."'/>
+							</h5>";
+							if($corpoMSGS['inputitensdinamicos2'] != ""){
+								$MSGSprontasCorpo .= "<h5>
+									<input type='text' value='#2' size='2' class='text-center' id='numero2ParametroMSGSdinamicas".$contadorprontas."' disabled /> => 									
+									<input type='text' placeholder='Digite: ".$corpoMSGS['inputitensdinamicos2']."' id='valor2ParametroMSGSdinamicas".$contadorprontas."'/> : ".$corpoMSGS['inputitensdinamicos2']."
+									<input type='hidden' value='".$corpoMSGS['inputitensdinamicos2']."' id='nome2ParametroMSGSdinamicas".$contadorprontas."'/>
+								</h5>";
+								if($corpoMSGS['inputitensdinamicos3'] != ""){
+									$MSGSprontasCorpo .= "<h5>
+										<input type='text' value='#3' size='2' class='text-center' id='numero3ParametroMSGSdinamicas".$contadorprontas."' disabled /> => 										
+										<input type='text' placeholder='Digite: ".$corpoMSGS['inputitensdinamicos3']."' id='valor3ParametroMSGSdinamicas".$contadorprontas."'/> : ".$corpoMSGS['inputitensdinamicos3']."
+										<input type='hidden' value='".$corpoMSGS['inputitensdinamicos3']."' id='nome3ParametroMSGSdinamicas".$contadorprontas."' />
+									</h5>";
+									if($corpoMSGS['inputitensdinamicos4'] != ""){
+										$MSGSprontasCorpo .= "<h5>
+											<input type='text' value='#4' size='2' class='text-center' id='numero4ParametroMSGSdinamicas".$contadorprontas."' disabled /> => 											
+											<input type='text' placeholder='Digite: ".$corpoMSGS['inputitensdinamicos4']."' id='valor4ParametroMSGSdinamicas".$contadorprontas."'/> : ".$corpoMSGS['inputitensdinamicos4']."
+											<input type='hidden' value='".$corpoMSGS['inputitensdinamicos4']."' id='nome4ParametroMSGSdinamicas".$contadorprontas."' />
+										</h5>";
+										if($corpoMSGS['inputitensdinamicos5'] != ""){
+											$MSGSprontasCorpo .= "<h5>
+												<input type='text' value='#5' size='2' class='text-center' id='numero5ParametroMSGSdinamicas".$contadorprontas."' disabled /> => 												
+												<input type='text' placeholder='Digite: ".$corpoMSGS['inputitensdinamicos5']."' id='valor5ParametroMSGSdinamicas".$contadorprontas."'/> : ".$corpoMSGS['inputitensdinamicos5']."
+												<input type='hidden' value='".$corpoMSGS['inputitensdinamicos5']."' id='nome5ParametroMSGSdinamicas".$contadorprontas."' />	
+											</h5>";
+										}
 									}
 								}
 							}
-						}
+						$MSGSprontasCorpo .= "</div class='col-8'><div class='col-2'>&nbsp;</div></div></li>";
 					}
-
-					$MSGSprontasCorpo .= "<li>
+					$MSGSprontasCorpo .= "<li class='pt-1'>
 						<button type='button' class='btn btn-success mr-3 btVisualizarMSGSprontaDoDB' id='".$contadorprontas."'>Visualizar</button>
-						<button type='button' class='btn btn-warning mr-3'>Gravar Edição</button>
-						<button type='button' class='btn btn-danger'>Excluir</button>
+						<button type='button' class='btn btn-warning mr-3 btEditaMSGSprontaDB' value='".$corpoMSGS['id']."' id='".$contadorprontas."'>Gravar Edição</button>
+						<button type='button' class='btn btn-danger btExluiMSGSprontaDB' value='".$corpoMSGS['id']."' id='".$contadorprontas."'>Excluir</button>
 					</li>";
 					$MSGSprontasCorpo .= "<li id='visualizandoMSGSdb".$contadorprontas."'></li>";
 					$MSGSprontasCorpo .= "<li><hr class='bg-dark'/></li>";									
@@ -132,7 +150,13 @@
 
 			$ferramentas = new ferramentas;			
 			$msgsProntas = new msgsProntas;			
-	
+		
+			if(isset($_POST['idbtExluiMSGSprontaDB'])){
+				$msgsProntas->excluindoMSGSprontas($con, $ferramentas, $_POST['idbtExluiMSGSprontaDB']);
+			}
+			if(isset($_POST['inputAssuntoMSGSdinamicasDB']) || isset($_POST['textareaMSGSdinamicasDB']) || isset($_POST['DBidbtEditaMSGSpronta'])){		
+				$msgsProntas->editandoMSGSprontas($con, $ferramentas, $_POST['inputAssuntoMSGSdinamicasDB'], $_POST['textareaMSGSdinamicasDB'], $_POST['DBidbtEditaMSGSpronta']);
+			}
 			if(isset($_POST['vermsgsprontas'])){				
 				$msgsProntas->listandoMSGSprontas($con, $ferramentas, $_POST['vermsgsprontas']);
 			}

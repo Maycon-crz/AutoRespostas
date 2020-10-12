@@ -1,9 +1,48 @@
 $(document).ready(function(){
+	excluindoMensagemPronta();
+	editandoMensagemPronta();
 	copiarTextoDaMSGSpronta();
 	listarMensagensProntas();
 	cadastroMSGSprontas();
 });
 var contaDinamicos=0;
+function excluindoMensagemPronta(){
+	$(document).on('click', '.btExluiMSGSprontaDB', function(){
+		var idbtExluiMSGSprontaDB = $(this).val();
+		$.ajax({
+			url: 'confg.php',
+			type: 'POST',
+			data: {'idbtExluiMSGSprontaDB': idbtExluiMSGSprontaDB},
+			dataType: 'json',
+			success: function(retornado){
+				alert(retornado);
+				carregar();
+			}
+		});
+	});
+}
+function editandoMensagemPronta(){
+	$(document).on('click', '.btEditaMSGSprontaDB', function(){
+		var idbtEditaMSGSprontaDB = $(this).attr('id');
+		var DBidbtEditaMSGSpronta = $(this).val();				
+		var inputAssuntoMSGSdinamicasDB 	= $("#inputAssuntoMSGSdinamicasDB"+idbtEditaMSGSprontaDB).val();
+		var textareaMSGSdinamicasDB 		= $("#textareaMSGSdinamicasDB"+idbtEditaMSGSprontaDB).val();
+		// alert(inputCriadaporMSGSdinamicasDB+" - "+inputAssuntoMSGSdinamicasDB+" - "+textareaMSGSdinamicasDB);
+		$.ajax({
+			url: 'confg.php',
+			type: 'POST',
+			data: {				
+				'inputAssuntoMSGSdinamicasDB': inputAssuntoMSGSdinamicasDB,
+				'textareaMSGSdinamicasDB': textareaMSGSdinamicasDB,
+				'DBidbtEditaMSGSpronta': DBidbtEditaMSGSpronta
+			},
+			dataType: 'json',
+			success: function(retornado){
+				alert(retornado);
+			}
+		});
+	});
+}
 function copiarTextoDaMSGSpronta(){
 	$(document).on('click', '.btCopiarTexto', function(){
 		var idBtCopiarTexto = $(this).attr('id');
@@ -35,14 +74,7 @@ function listarMensagensProntas(){
 		var idbtVisualizarMSGSprontaDoDB 	= $(this).attr('id');
 		var inputCriadaporMSGSdinamicasDB 	= $("#inputCriadaporMSGSdinamicasDB"+idbtVisualizarMSGSprontaDoDB).val();
 		var inputAssuntoMSGSdinamicasDB 	= $("#inputAssuntoMSGSdinamicasDB"+idbtVisualizarMSGSprontaDoDB).val();
-		var textareaMSGSdinamicasDB 		= $("#textareaMSGSdinamicasDB"+idbtVisualizarMSGSprontaDoDB).val();
-		// var valor1ParametroMSGSdinamicas 	= $("#valor1ParametroMSGSdinamicas"+idbtVisualizarMSGSprontaDoDB).val();
-		// var valor2ParametroMSGSdinamicas 	= $("#valor2ParametroMSGSdinamicas"+idbtVisualizarMSGSprontaDoDB).val();
-		// var valor3ParametroMSGSdinamicas		= $("#valor3ParametroMSGSdinamicas"+idbtVisualizarMSGSprontaDoDB).val();
-		// var valor4ParametroMSGSdinamicas 	= $("#valor4ParametroMSGSdinamicas"+idbtVisualizarMSGSprontaDoDB).val();
-		// var valor5ParametroMSGSdinamicas 	= $("#valor5ParametroMSGSdinamicas"+idbtVisualizarMSGSprontaDoDB).val();
-		// alert(inputCriadaporMSGSdinamicasDB+" - "+inputAssuntoMSGSdinamicasDB+" - "+textareaMSGSdinamicasDB+" - "+valor1ParametroMSGSdinamicas+" - "+valor2ParametroMSGSdinamicas+" - "+valor3ParametroMSGSdinamicas+" - "+valor4ParametroMSGSdinamicas+" - "+valor5ParametroMSGSdinamicas);
-
+		var textareaMSGSdinamicasDB 		= $("#textareaMSGSdinamicasDB"+idbtVisualizarMSGSprontaDoDB).val();		
 		if($("#valor1ParametroMSGSdinamicas"+idbtVisualizarMSGSprontaDoDB).val()){
 			var valor1ParametroMSGSdinamicas = $("#valor1ParametroMSGSdinamicas"+idbtVisualizarMSGSprontaDoDB).val();			
 			textareaMSGSdinamicasDB = textareaMSGSdinamicasDB.replace("#1", valor1ParametroMSGSdinamicas);
