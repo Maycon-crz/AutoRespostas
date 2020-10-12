@@ -56,11 +56,14 @@ function copiarTextoDaMSGSpronta(){
 		}
 	});
 }
-function carregaMensagensProntasDoDB(valueBtMaisMSGSprontas){
+function carregaMensagensProntasDoDB(valueBtMaisMSGSprontas, assuntoBuscaMSGpronta){
 	$.ajax({
 		url: 'confg.php',
 		type: 'POST',
-		data: {'vermsgsprontas': valueBtMaisMSGSprontas},
+		data: {
+			'vermsgsprontas': valueBtMaisMSGSprontas,
+			'assuntoBuscaMSGpronta': assuntoBuscaMSGpronta
+		},
 		dataType: 'json',
 		success: function(retornado){
 			$("#linhaTodasProntas").html(retornado);
@@ -70,16 +73,20 @@ function carregaMensagensProntasDoDB(valueBtMaisMSGSprontas){
 		}
 	});
 }
-function listarMensagensProntas(){		
+function listarMensagensProntas(){
+	$(document)	.on('click', '#btProcuraMSGprontaEspecifica', function(){
+		var especificaMSGpronta = $("#especificaMSGpronta").val();
+		carregaMensagensProntasDoDB(3, especificaMSGpronta);	
+	});
 	$(document).on('click', '#btMaisMSGSprontas', function(){
-		var valueBtMaisMSGSprontas = $("#btMaisMSGSprontas").val();
-		carregaMensagensProntasDoDB(valueBtMaisMSGSprontas);
+		var valueBtMaisMSGSprontas = $("#btMaisMSGSprontas").val();		
+		carregaMensagensProntasDoDB(valueBtMaisMSGSprontas, "semAssuntoBusca");		
 	});
 	$(document).on('click', '#vermsgsprontas', function(){
 		$("#linhaProntas").toggle();
 		$("#btMaisMSGSprontas").val(3);
 		var valueBtMaisMSGSprontas = 3;	
-		carregaMensagensProntasDoDB(valueBtMaisMSGSprontas);
+		carregaMensagensProntasDoDB(valueBtMaisMSGSprontas, "semAssuntoBusca");
 	});
 	$(document).on('click', '.btVisualizarMSGSprontaDoDB', function(){
 		var idbtVisualizarMSGSprontaDoDB 	= $(this).attr('id');

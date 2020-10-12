@@ -29,11 +29,19 @@
 				echo json_encode("Erro ao Editar Mensagem!");
 			}
 		}
-		function listandoMSGSprontas($con, $ferramentas, $vermsgsprontas){
+		function listandoMSGSprontas($con, $ferramentas, $vermsgsprontas, $parametrobusca){
 			// echo json_encode("Bora laa funcao chamada ".$vermsgsprontas);
 			$vermsgsprontas = $ferramentas->filtrando($vermsgsprontas);
-			$sqlSelectMSGSprontas = "SELECT * FROM mensagensprontas WHERE 1=1 ORDER BY id DESC LIMIT $vermsgsprontas";
-			$selectMSGSprontas = $con->prepare($sqlSelectMSGSprontas);
+			$parametrobusca = $ferramentas->filtrando($parametrobusca);
+			if($parametrobusca === 'semAssuntoBusca'){
+				$sqlSelectMSGSprontas = "SELECT * FROM mensagensprontas WHERE 1=1 ORDER BY id DESC LIMIT $vermsgsprontas";
+				$selectMSGSprontas = $con->prepare($sqlSelectMSGSprontas);
+			}else{
+				$sqlSelectMSGSprontas = "SELECT * FROM mensagensprontas WHERE assuntomsgpronta LIKE :parametrobusca ORDER BY id DESC LIMIT $vermsgsprontas";
+				$selectMSGSprontas = $con->prepare($sqlSelectMSGSprontas);
+				$parametrobusca = "%".$parametrobusca."%";
+				$selectMSGSprontas->bindParam(':parametrobusca', $parametrobusca, PDO::PARAM_STR);
+			}
 			if($selectMSGSprontas->execute()){
 				$corpoMSGSprontas = $selectMSGSprontas->fetchAll(PDO::FETCH_ASSOC);
 				$MSGSprontasCorpo = "";
@@ -157,8 +165,9 @@
 			if(isset($_POST['inputAssuntoMSGSdinamicasDB']) || isset($_POST['textareaMSGSdinamicasDB']) || isset($_POST['DBidbtEditaMSGSpronta'])){		
 				$msgsProntas->editandoMSGSprontas($con, $ferramentas, $_POST['inputAssuntoMSGSdinamicasDB'], $_POST['textareaMSGSdinamicasDB'], $_POST['DBidbtEditaMSGSpronta']);
 			}
-			if(isset($_POST['vermsgsprontas'])){				
-				$msgsProntas->listandoMSGSprontas($con, $ferramentas, $_POST['vermsgsprontas']);
+			// $msgsProntas->listandoMSGSprontas($con, $ferramentas, 3, 'a');
+			if(isset($_POST['vermsgsprontas']) || isset($_POST['assuntoBuscaMSGpronta'])){				
+				$msgsProntas->listandoMSGSprontas($con, $ferramentas, $_POST['vermsgsprontas'], $_POST['assuntoBuscaMSGpronta']);
 			}
 			if( isset($_POST['mensagemParaCadastro']) || isset($_POST['assuntoMSGpronta']) || isset($_POST['criadaPor']) || 
 				isset($_POST['inputItensDinamicos1']) || isset($_POST['inputItensDinamicos2']) || isset($_POST['inputItensDinamicos3']) || 
