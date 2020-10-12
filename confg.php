@@ -49,16 +49,16 @@
 				foreach($corpoMSGSprontas as $corpoMSGS){
 					$contadorprontas++;
 					$MSGSprontasCorpo .= "<ul class='border border-success'>";
-					$MSGSprontasCorpo .= "<li><h3 class='mt-1'>Criada Por: </h3></li>";
+					$MSGSprontasCorpo .= "<li><h5 class='mt-1'>Criada Por: </h5></li>";
 					$MSGSprontasCorpo .= "<li><input type='text' value='".$corpoMSGS['criadapor']."' class='form-control text-center border border-primary' id='inputCriadaporMSGSdinamicasDB".$contadorprontas."' disabled /></li>";
-					$MSGSprontasCorpo .= "<li><h3 class='mt-1'>Assunto:</h3></li>";
+					$MSGSprontasCorpo .= "<li><h5 class='mt-1'>Assunto:</h5></li>";
 					$MSGSprontasCorpo .= "<li><input type='text' value='".$corpoMSGS['assuntomsgpronta']."' class='form-control text-center border border-primary' id='inputAssuntoMSGSdinamicasDB".$contadorprontas."'></li>";
-					$MSGSprontasCorpo .= "<li><h3 class='mt-1'>Menssagem: </h4></li>";
+					$MSGSprontasCorpo .= "<li><h5 class='mt-1'>Menssagem: </h5></li>";
 					$MSGSprontasCorpo .= "<li><textarea class='form-control border border-warning' id='textareaMSGSdinamicasDB".$contadorprontas."'>".$corpoMSGS['mensagemparacadastro']."</textarea></li>";
 					
 					//Criar funcao separada para inputs dinamicos
 					if($corpoMSGS['inputitensdinamicos1']){
-						$MSGSprontasCorpo .= "<li><h3>Dinamicos: </h4></li>";
+						$MSGSprontasCorpo .= "<li><h3>Dinamicos: </h3></li>";
 						$MSGSprontasCorpo .= "<li><div class='row'><div class='col-2'>&nbsp;</div><div class='col-8 text-left bg-success'>";
 							$MSGSprontasCorpo .= "<h5 class='mt-2'>
 								<input type='text' value='#1' size='2' class='text-center' id='numero1ParametroMSGSdinamicas".$contadorprontas."' disabled /> => 								

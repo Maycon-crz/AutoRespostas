@@ -13,9 +13,7 @@
 		<div class='col-12 text-center'>
 			<ul>
 				<li>
-					<input type='text' id='especificaMSGpronta' placeholder='Procurar por assunto' class='form-control text-center'>
-				</li><li>
-					<button type='button' id='btProcuraMSGprontaEspecifica' class='form-control btn btn-success'>Procurar->></button>								
+					<input type='text' id='especificaMSGpronta' placeholder='Digite para Procurar por assunto...' class='form-control border border-success text-center text-success'>
 				</li><li>
 					<div id='linhaTodasProntas'>**linhaTodasProntas**</div>					
 				</li><li>

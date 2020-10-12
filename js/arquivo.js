@@ -74,9 +74,9 @@ function carregaMensagensProntasDoDB(valueBtMaisMSGSprontas, assuntoBuscaMSGpron
 	});
 }
 function listarMensagensProntas(){
-	$(document)	.on('click', '#btProcuraMSGprontaEspecifica', function(){
+	$('#especificaMSGpronta').keyup(function(){
 		var especificaMSGpronta = $("#especificaMSGpronta").val();
-		carregaMensagensProntasDoDB(3, especificaMSGpronta);	
+		carregaMensagensProntasDoDB(3, especificaMSGpronta);
 	});
 	$(document).on('click', '#btMaisMSGSprontas', function(){
 		var valueBtMaisMSGSprontas = $("#btMaisMSGSprontas").val();		
