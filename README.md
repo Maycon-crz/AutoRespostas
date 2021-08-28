@@ -1,5 +1,5 @@
 # AutoRespostas
-<h1>Respostas automaticas para clientes cadastro, parametros, edicao e copiar mensagens.</h1>
+<h1>Respostas automáticas para clientes, cadastro, parametros, edição e copiar mensagens.</h1>
 <p>Você nunca teve o sentimento de que estava respondendo a mesma pegunta só que para pessoas diferentes? Então com esse projeto você consegue responder varias pessoas </p>
 <h2>Botões Iniciais</h2>
 <img src='img/Apresentando/msgsAuto.PNG'>
